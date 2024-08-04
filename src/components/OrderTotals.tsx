@@ -2,14 +2,15 @@
 import { useMemo } from "react"
 import type { OrderItem } from "../types"
 import { formatCurrency } from "../helpers"
+import { OrderActions } from "../reducers/order-reducer"
 
 interface OrderTotalsProps{
     order: OrderItem[]
-    clearItems: () => void
+    dispatch: React.Dispatch<OrderActions>
     tip: number
 }
 
-export default function OrderTotals({order, clearItems, tip} : OrderTotalsProps) {
+export default function OrderTotals({order, dispatch, tip} : OrderTotalsProps) {
 
     // Subtotal cada orden
     const subtotalAmount = useMemo(() => order.reduce(
@@ -45,7 +46,7 @@ export default function OrderTotals({order, clearItems, tip} : OrderTotalsProps)
                     </div>
                     <button
                         className=" bg-blue-300 rounded-full p-2 font-bold"
-                        onClick={clearItems}
+                        onClick={() => dispatch({type: "vaciar-orders"})}
                     >
                         Enviar Pedido
                     </button>

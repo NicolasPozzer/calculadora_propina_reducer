@@ -1,13 +1,16 @@
+import { useReducer } from "react"
 import MenuItem from "./components/MenuItem"
 import OrderContents from "./components/OrderContents"
 import OrderTotals from "./components/OrderTotals"
 import TipPercentageForm from "./components/TipPercentageForm"
 import { menuItems } from "./data/db"
-import useOrder from "./hooks/useOrder"
+import { initialState, orderReducer } from "./reducers/order-reducer"
 
 function App() {
 
-  const { order, addItem, removeItem, clearItems, tip, setTip } = useOrder()
+
+  // importar reducer
+  const [state, dispatch] = useReducer(orderReducer, initialState)
 
   return (
     <>
@@ -25,30 +28,30 @@ function App() {
                 //Siempre que se itera necesitamos el key unico
                 key={item.id}
                 item={item}
-                addItem={addItem}
+                dispatch={dispatch}
               />
             ))}
           </div>
         </div>
 
         <div className="border border-dashed border-slate-300 p-5 rounded-lg space-y-10">
-          {order.length > 0 ?
+          {state.order.length > 0 ?
             <>
               <OrderContents
-                order={order}
-                removeItem={removeItem}
+                order={state.order}
+                dispatch={dispatch}
 
               />
 
               <TipPercentageForm
-                setTip={setTip}
-                tip={tip}
+                dispatch={dispatch}
+                tip={state.tip}
               />
 
               <OrderTotals
-                order={order}
-                clearItems={clearItems}
-                tip={tip}
+                order={state.order}
+                dispatch={dispatch}
+                tip={state.tip}
               />
             </> :
 

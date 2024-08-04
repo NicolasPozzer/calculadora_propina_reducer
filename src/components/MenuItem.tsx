@@ -1,18 +1,19 @@
+import { OrderActions } from "../reducers/order-reducer"
 import type { MenuItem } from "../types"
 
 interface MenuItemProps {
     item: MenuItem
-    addItem: (item: MenuItem) => void
+    dispatch: React.Dispatch<OrderActions>
 }
 
 
-export default function MenuItem({item, addItem} : MenuItemProps) {
+export default function MenuItem({item, dispatch} : MenuItemProps) {
   return (
     <button
         className="border-2 border-teal-400
          hover:bg-teal-200 w-full p-3 flex
           justify-between"//w-full para que tome todo el ancho
-        onClick={() => addItem(item)}//Como tiene que recibir algo,
+        onClick={() => dispatch({type: "add-item", payload: {item}})}//Como tiene que recibir algo,
         // se le agrega el CallBack "() =>" antes de llamar a la funcion.
     >
         

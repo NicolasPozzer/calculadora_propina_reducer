@@ -1,3 +1,5 @@
+import { OrderActions } from "../reducers/order-reducer"
+
 const tipOptions = [
     {
         id: 'tip-10',
@@ -18,11 +20,11 @@ const tipOptions = [
 
 // Props
 interface TipPercentageFormProps{
-    setTip: React.Dispatch<React.SetStateAction<number>>
+    dispatch: React.Dispatch<OrderActions>
     tip: number
 }
 
-export default function TipPercentageForm({setTip, tip} : TipPercentageFormProps) {
+export default function TipPercentageForm({dispatch, tip} : TipPercentageFormProps) {
     return (
         <div>
             <h3 className="font-black text-2xl">
@@ -41,7 +43,7 @@ export default function TipPercentageForm({setTip, tip} : TipPercentageFormProps
                         value={tipOption.value}//esto va para que deje seleccionar uno solo
                         //Obtenemos el evento con e y le asignamos el valor de tip.value
                         //con ese "+" transformamos a number un string
-                        onChange={e => setTip(+e.target.value)}// para ejecutar algo cada vez que presione en una opcion
+                        onChange={e => dispatch({type: "add-tip", payload: {value: +e.target.value}})}// para ejecutar algo cada vez que presione en una opcion
                         checked={tipOption.value === tip}
                     />
                     </div>
